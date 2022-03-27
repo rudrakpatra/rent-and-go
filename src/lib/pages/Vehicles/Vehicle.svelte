@@ -1,5 +1,6 @@
 <script lang="ts">
-	import Switch from '@smui/switch';
+    import SegmentedButton, { Segment } from '@smui/segmented-button';
+    import { Label } from '@smui/common';
     import Paper, { Title, Content } from '@smui/paper';
     import CircularProgress from '@smui/circular-progress';
     export let src="vehicles/cosaySec.webp"
@@ -7,7 +8,8 @@
     let loaded=true;
     let elevation = 1;
     let color = 'default';
-    let AC=false;
+    let choices = ['AC', 'NON AC'];
+    let selected = 'AC';
 </script>
 <div class="paper-container">
     <Paper 
@@ -29,12 +31,11 @@
                     {/if}
                 </div>
             </Paper>
-            {#if AC}
-                AC
-            {:else}
-                NON AC
-            {/if}
-            <Switch bind:AC={AC}></Switch>
+            <SegmentedButton segments={choices} let:segment singleSelect bind:selected>
+                <Segment {segment}>
+                  <Label>{segment}</Label>
+                </Segment>
+            </SegmentedButton>
         </Content>
     </Paper>
 </div>

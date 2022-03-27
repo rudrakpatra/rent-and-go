@@ -8,84 +8,71 @@
     } from '@smui/drawer';
     import List, { Item, Text, Graphic, Separator, Subheader } from '@smui/list';
     import { H6 } from '@smui/common/elements';
-  
+    import VehicleList from './pages/Vehicles/VehicleList.svelte';
+    import Orders from './pages/Orders.svelte';
+    import Help from './pages/Help.svelte';
     export let open = false;
-    let active = 'Inbox';
-  
-    function setActive(value: string) {
-      active = value;
+    interface Page{
+      name:string;
+      icon:string;
+      component:any;
+    }
+    let pages:Page[]=[
+      {
+        name:"orders",
+        icon:"list",
+        component:Orders,
+      },
+      {
+        name:"vehicles",
+        icon:"car_rental",
+        component:VehicleList,
+      },
+      {
+        name:"help center",
+        icon:"help",
+        component:Help,
+      }
+    ];
+    export let active = 0;
+    function setActive(i: number) {
+      active = i;
       open = false;
     }
   </script>
   
 <Drawer variant="modal" bind:open>
     <Header>
-    <Title>Super Mail</Title>
-    <Subtitle>It's the best fake mail app drawer.</Subtitle>
+    <Title>User:{"<user name>"}</Title>
+    <Subtitle>Subtitle.</Subtitle>
     </Header>
     <Content>
-    <List>
-        <Item
-        href="javascript:void(0)"
-        on:click={() => setActive('Inbox')}
-        activated={active === 'Inbox'}
-        >
-        <Graphic class="material-icons" aria-hidden="true">inbox</Graphic>
-        <Text>Inbox</Text>
-        </Item>
-        <Item
-        href="javascript:void(0)"
-        on:click={() => setActive('Star')}
-        activated={active === 'Star'}
-        >
-        <Graphic class="material-icons" aria-hidden="true">star</Graphic>
-        <Text>Star</Text>
-        </Item>
-        <Item
-        href="javascript:void(0)"
-        on:click={() => setActive('Sent Mail')}
-        activated={active === 'Sent Mail'}
-        >
-        <Graphic class="material-icons" aria-hidden="true">send</Graphic>
-        <Text>Sent Mail</Text>
-        </Item>
-        <Item
-        href="javascript:void(0)"
-        on:click={() => setActive('Drafts')}
-        activated={active === 'Drafts'}
-        >
-        <Graphic class="material-icons" aria-hidden="true">drafts</Graphic>
-        <Text>Drafts</Text>
-        </Item>
-
-        <Separator />
-        <Subheader component={H6}>Labels</Subheader>
-        <Item
-        href="javascript:void(0)"
-        on:click={() => setActive('Family')}
-        activated={active === 'Family'}
-        >
-        <Graphic class="material-icons" aria-hidden="true">bookmark</Graphic>
-        <Text>Family</Text>
-        </Item>
-        <Item
-        href="javascript:void(0)"
-        on:click={() => setActive('Friends')}
-        activated={active === 'Friends'}
-        >
-        <Graphic class="material-icons" aria-hidden="true">bookmark</Graphic>
-        <Text>Friends</Text>
-        </Item>
-        <Item
-        href="javascript:void(0)"
-        on:click={() => setActive('Work')}
-        activated={active === 'Work'}
-        >
-        <Graphic class="material-icons" aria-hidden="true">bookmark</Graphic>
-        <Text>Work</Text>
-        </Item>
-    </List>
+      <List>
+          {#each pages as page ,i}
+            <Item
+            href="javascript:void(0)"
+            on:click={() => setActive(i)}
+            activated={active === i}
+            >
+              <Graphic class="material-icons" aria-hidden="true">{page.icon}</Graphic>
+              <Text>{page.name}</Text>
+            </Item>
+            <Separator />
+          {/each}
+      </List>
     </Content>
 </Drawer>
 <Scrim/>
+<!-- actual page details -->
+<div class="container">
+  <svelte:component this={pages[active].component}/>
+</div> 
   
+<style>
+    .container{
+    width:100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+  }
+</style>

@@ -1,14 +1,17 @@
 <script lang="ts">
 import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
 import IconButton from '@smui/icon-button';
-import Drawer from './Drawer.svelte';
-import VehicleList from './VehicleList.svelte';
 import Search from './Search.svelte';
+import Drawer from './Drawer.svelte';
+
+
 
 let openDrawer=false;
+let activePage="vehicles"
+$:console.log(activePage);
 </script>
 
-<Drawer bind:open={openDrawer}/>
+
 <div class="flexV">
   <div>
       <TopAppBar
@@ -34,25 +37,19 @@ let openDrawer=false;
         </Row>
       </TopAppBar>
     </div>
-
-  <div class="vehicles-container">
-    <VehicleList/>
-  </div> 
+    <Drawer 
+    bind:open={openDrawer}
+    />
 </div>
 
-<style>
+
+<style >
     .flexV{
       user-select: none;
       position:fixed;
       height:100%;
       width:100%;
       display:flex;
-      flex-direction: column;
-    }
-    .vehicles-container{
-      width:100%;
-      overflow: auto;
-      display: flex;
       flex-direction: column;
     }
 </style>

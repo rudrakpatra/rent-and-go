@@ -7,6 +7,9 @@ export default class User {
     this.name = "";
     this.password = "";
     this.email = "";
+    //
+    // A USER ID MEANS A VALID USER HAS LOGGED IN
+    this.id = 10;
   }
   /**
    * Requests the database to get a user with the given name and password and tries to get the id of the user

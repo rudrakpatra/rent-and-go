@@ -1,11 +1,8 @@
 <script lang="ts">
-	import AppBar from './lib/AppBar.svelte';
-import SignInUp from './lib/SignInUp.svelte';
+  import Main from './lib/Main.svelte';
+  import SignInUp from './lib/SignInUp.svelte';
 
-import User from "./lib/User";
-  import "./theme.css"
-
-
+  import User from "./lib/User";
   let user=new User();
 </script>
 
@@ -27,12 +24,10 @@ import User from "./lib/User";
   />
   <!-- smui theme -->
   <link rel="stylesheet" href="node_modules/svelte-material-ui/bare.css" />
+  <link rel="stylesheet" href="/src/smui.css" />
   <style>
     *{
       margin:0;
-    }
-    .error {
-      color:var(--mdc-theme-error)!important;
     }
   </style>
 </svelte:head>
@@ -40,8 +35,7 @@ import User from "./lib/User";
   {#if !user.id}
   <SignInUp bind:user/>
   {:else}
-   <AppBar/>
+  <Main/>
   {/if}
- 
 </main>
 

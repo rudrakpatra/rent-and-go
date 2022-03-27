@@ -57,7 +57,7 @@
         return boldedMatch;
     }
 
-    const removeBold = (str) => {
+    const removeBold = (str:string) => {
         //replace < and > all characters between
         return str.replace(/<(.)*?>/g, "");
         // return str.replace(/<(strong)>/g, "").replace(/<\/(strong)>/g, "");
@@ -121,5 +121,6 @@
   }
   * :global(.solo-fab) {
     flex-shrink: 0;
+    margin: 0px;
   }
 </style>

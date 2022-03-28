@@ -1,79 +1,18 @@
 <div class="mdc-typography--headline1">Orders</div>
 
-<style lang="scss">
-// Import all the styles for the classes.
-@use '@material/typography/mdc-typography';
-// The following classes become available:
-//   mdc-typography--headline1
-//   mdc-typography--headline2
-//   mdc-typography--headline3
-//   mdc-typography--headline4
-//   mdc-typography--headline5
-//   mdc-typography--headline6
-//   mdc-typography--subtitle1
-//   mdc-typography--subtitle2
-//   mdc-typography--body1
-//   mdc-typography--body2
-//   mdc-typography--caption
-//   mdc-typography--button
-//   mdc-typography--overline
-//   mdc-typography--body1
- 
-// Import the mixins.
-@use '@material/typography/index' as typography;
- 
-//
-// Some defaults that may be helpful to you.
-// If you just want to use these, and not the classes, you can instead just
-// @use '@material/typography/index' as typography, and your CSS file will be smaller.
-//
-html {
-  @include typography.typography('body1');
-}
- 
-h1 {
-  @include typography.typography('headline1');
-}
- 
-h2 {
-  @include typography.typography('headline2');
-}
- 
-h3 {
-  @include typography.typography('headline3');
-}
- 
-h4 {
-  @include typography.typography('headline4');
-}
- 
-h5 {
-  @include typography.typography('headline5');
-}
- 
-h6 {
-  @include typography.typography('headline6');
-}
- 
-caption {
-  @include typography.typography('caption');
-}
- 
-code,
-pre {
-  font-family: 'Roboto Mono', monospace;
-}
- 
-small {
-  font-size: 0.9em;
-}
- 
-big {
-  font-size: 1.1em;
-}
- 
-b,
-strong {
-  font-weight: bold;
-}
-</style>
+
+{#each Array(50) as _unused, i}
+<div data-searchBy={`Cell ${i + 1}`} class="demo-cell">Cell {i + 1}</div>
+{/each}
+<style>
+    .demo-cell {
+      height: 500px;
+      width:60px;
+      margin:10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--mdc-theme-secondary, #333);
+      color: var(--mdc-theme-on-secondary, #fff);
+    }
+  </style>

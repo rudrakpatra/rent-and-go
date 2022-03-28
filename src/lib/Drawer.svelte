@@ -64,16 +64,19 @@
 </Drawer>
 <Scrim/>
 <!-- actual page details -->
-<div class="container">
+<div class="container gradient">
   <svelte:component this={pages[active].component}/>
 </div> 
   
-<style>
-    .container{
-    width:100%;
+<style lang="scss">
+  .container{
+    width:100vw;
     height:100%;
     overflow: auto;
     display: flex;
     flex-direction: column;
+  }
+  .gradient{
+  background-image:linear-gradient(#eee,#ddd,);
   }
 </style>

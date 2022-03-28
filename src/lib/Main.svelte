@@ -1,13 +1,12 @@
 <script lang="ts">
 import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
 import IconButton from '@smui/icon-button';
-import Search from './Search.svelte';
+import Search from './search/Search.svelte';
 import Drawer from './Drawer.svelte';
 
 
-
 let openDrawer=false;
-let activePage="vehicles"
+let activePage=1
 $:console.log(activePage);
 </script>
 
@@ -23,12 +22,10 @@ $:console.log(activePage);
             <IconButton 
             on:click={()=>{openDrawer=true}}
             class="material-icons">menu</IconButton>
-            <Title>Rent&Go</Title>
-            <span 
-            class="material-icons" 
-            style= " margin:10px;">
-              airport_shuttle
-            </span>
+            <img 
+            class="logo"
+            src='./logo.svg'
+            alt="R&G"/>
           </Section>
       
           <Section align="end" toolbar>
@@ -39,11 +36,17 @@ $:console.log(activePage);
     </div>
     <Drawer 
     bind:open={openDrawer}
+    active={activePage}
     />
 </div>
 
 
 <style >
+  .logo{
+    margin-left:5px;
+    margin-right:50px;
+    height:40px;
+  }
     .flexV{
       user-select: none;
       position:fixed;

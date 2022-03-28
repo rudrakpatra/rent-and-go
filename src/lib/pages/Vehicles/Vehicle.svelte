@@ -1,58 +1,81 @@
 <script lang="ts">
-    import SegmentedButton, { Segment } from '@smui/segmented-button';
-    import { Label } from '@smui/common';
-    import Paper, { Title, Content } from '@smui/paper';
+    import Card, {
+      Content,
+      Media,
+      MediaContent,
+      Actions,
+      ActionButtons,
+    } from '@smui/card';
+    import Button, { Label } from '@smui/button';
+    import Rent from './Rent.svelte';
     import CircularProgress from '@smui/circular-progress';
+    import VehicleBP from "./Vehicle";
     export let src="vehicles/cosaySec.webp"
-    let name="Hyundai i20"
     let loaded=true;
-    let elevation = 1;
-    let color = 'default';
-    let choices = ['AC', 'NON AC'];
-    let selected = 'AC';
+
+    let vehicle=new VehicleBP();
+
+    let renting=false;
 </script>
-<div class="paper-container">
-    <Paper 
-    on:mouseover={()=>{elevation=10}}
-    on:mouseleave={()=>{elevation=1}}
-    transition {elevation} {color}>
-        <Title>Vehicle node_modules</Title>
-        <Content style="display:flex">
-            <Paper 
-            style="padding:0px"
-            elevation={3}>
-                <div class="center" >
-                    {#if loaded}
-                        <img class="img"{src} alt={name}>
-                    {:else}
-                        <CircularProgress 
-                        style="height: 80px; width: 80px;" 
-                        indeterminate />
-                    {/if}
-                </div>
-            </Paper>
-            <SegmentedButton segments={choices} let:segment singleSelect bind:selected>
-                <Segment {segment}>
-                  <Label>{segment}</Label>
-                </Segment>
-            </SegmentedButton>
-        </Content>
-    </Paper>
-</div>
+
+<Card >
+    <Media aspectRatio="16x9">
+        <MediaContent >
+            {#if loaded}
+            <img {src} class="effect" alt={"image not available"}>
+            {:else}
+            <div class="center skeleton">
+            <div class="mdc-typography--subtitle2">loading image</div>
+            <CircularProgress style="height: 20%; width: 20%;" indeterminate />
+            </div>
+            {/if} 
+        </MediaContent>
+    </Media>
+    <Content class="mdc-typography--body2">
+        
+    <h2 class="
+    mdc-typography--headline6
+    " 
+    data-searchBy={src}
+    style="margin: 0;">
+        {src}
+    </h2>
+    <h3
+        class="mdc-typography--subtitle2"
+        style="margin: 0 0 10px; color: #888;"
+    >
+        {vehicle.id}
+    </h3>
+    </Content>
+    <Actions>
+        <ActionButtons>
+        <Button on:click={() => renting=true}>
+            <Label>Rent Now</Label>
+        </Button>
+        </ActionButtons>
+    </Actions>
+</Card>
+<Rent 
+{vehicle} 
+bind:open={renting}
+/>
 <style lang="scss">
-    .paper-container{
-        user-select: none;
-        margin:10px;
+    .effect{
+        filter: hue-rotate(10deg);
     }
     .center{
         width:100%;
         height:100%;
+        position:absolute;
         display: flex;
         justify-content: center;
         align-items: center;
     }
     img{
-        height:120px;
+        width:100%;
     }
-  </style>
+    .skeleton{
+        background-color: #eee;
+    }
+</style>
   

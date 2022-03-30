@@ -11,7 +11,7 @@
 <Slider
   bind:value
   min={0}
-  max={24*60}
+  max={24*60-1}
   step={1}
   input$aria-label="Continuous slider"
 />

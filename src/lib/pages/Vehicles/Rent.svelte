@@ -26,7 +26,6 @@
 
     let pickUpDate=new Date();
     let returnDate=new Date();
-    console.log(pickUpDate,returnDate)
     const handlePickUpDate=()=>{
 
     }
@@ -38,64 +37,68 @@
   fullscreen
   bind:open={open}
   >
-  <Paper>
-        <FormField style="
-        display:block;
-        ">
-        <Title>
-            Payment Details
-        </Title>
-            <Content>
-                <div class="mdc-typography--overline">
-                    Type:
-                    <br/>
-                    <SegmentedButton segments={choices} let:segment singleSelect bind:selected={selected}>
-                        <!-- Note: the `segment` property is required! -->
-                        <Segment {segment}>
-                        <Label>{segment}</Label>
-                        </Segment>
-                    </SegmentedButton>
-                        <p>pickup date:</p>
-                        <div style="width:fit-content">
+    <Paper>
+            <FormField style="
+            display:block;
+            ">
+            <Title>
+                Payment Details
+            </Title>
+                <Content>
+                    <div class="mdc-typography--overline">
+                        Type:
+                        <br/>
+                        <SegmentedButton segments={choices} let:segment singleSelect bind:selected={selected}>
+                            <!-- Note: the `segment` property is required! -->
+                            <Segment {segment}>
+                            <Label>{segment}</Label>
+                            </Segment>
+                        </SegmentedButton>
+                            <p>pickup date:</p>
+                            <div style="width:fit-content">
+                                <Datefield
+                                value={pickUpDate}
+                                readonly={false}
+                                locale={false}
+                                format='D.MM.YYYY'
+                                message='DD.MM.YYYY'
+                                on:date-change={handlePickUpDate}
+                            />
+                            </div>
+                
+                            <TimePicker/>
+                            <br/>
+        
+                            <p >expected return date:</p>
+                            <div style="width:fit-content">
                             <Datefield
-                            value={pickUpDate}
-                            format='D.MM.YYYY'
-                            message='DD.MM.YYYY'
-                            on:date-change={handlePickUpDate}
-                        />
-                        </div>
-               
-                        <TimePicker/>
-                        <br/>
-    
-                        <p >expected return date:</p>
-                        <div style="width:fit-content">
-                        <Datefield
-                            value={returnDate}
-                            format='D.MM.YYYY'
-                            message='DD.MM.YYYY'
-                            on:date-change={handleReturnDate}
-                        />
-                        </div>
-                        <TimePicker/>
-                        <br/>
+                                value={returnDate}
+                                readonly={false}
+                                locale={false}
+                                format='D.MM.YYYY'
+                                message='DD.MM.YYYY'
+                                on:date-change={handleReturnDate}
+                            />
+                            </div>
+                            <TimePicker/>
+                            <br/>
 
-                    <p>model:</p>
-                    <p >{vehicle.model}</p>
-                    <p>per hour charge:</p>
-                    <p>₹ {vehicle.perHourCharge*multiplier}</p>
-                    <p>per km charge:</p>
-                    <p>₹ {vehicle.perKmCharge*multiplier}</p>
-                    <p>minimum charge:</p>
-                    <p>₹ {vehicle.perHourCharge*4*multiplier}</p>
-                </div>
-            </Content>
-            <Actions>
-                <Button on:click={onSubmit}>pay advance ₹{advancePayment()}</Button>
-            </Actions>
-        </FormField>  
-    </Paper>
-</Dialog>
+                        <p>model:</p>
+                        <p >{vehicle.model}</p>
+                        <p>per hour charge:</p>
+                        <p>₹ {vehicle.perHourCharge*multiplier}</p>
+                        <p>per km charge:</p>
+                        <p>₹ {vehicle.perKmCharge*multiplier}</p>
+                        <p>minimum charge:</p>
+                        <p>₹ {vehicle.perHourCharge*4*multiplier}</p>
+                    </div>
+                </Content>
+                <Actions>
+                    <Button on:click={onSubmit}>pay advance ₹{advancePayment()}</Button>
+                </Actions>
+            </FormField>  
+        </Paper>
+    </Dialog>
 
 <style lang="scss">
     *{

@@ -18,7 +18,8 @@
     let renting=false;
 </script>
 
-<Card >
+<Card 
+data-searchBy={src}>
     <Media aspectRatio="16x9">
         <MediaContent >
             {#if loaded}
@@ -36,7 +37,6 @@
     <h2 class="
     mdc-typography--headline6
     " 
-    data-searchBy={src}
     style="margin: 0;">
         {src}
     </h2>
@@ -61,7 +61,7 @@ bind:open={renting}
 />
 <style lang="scss">
     .effect{
-        filter: hue-rotate(10deg);
+        filter: hue-rotate(0deg);
     }
     .center{
         width:100%;

@@ -31,22 +31,26 @@
     }
     /* width */
     *::-webkit-scrollbar {
-      width: 2px;
+      width: 5px;
     }
 
     /* Track */
     *::-webkit-scrollbar-track {
-      background: #f1f1f1; 
+      background:transparent;
     }
     
     /* Handle */
     *::-webkit-scrollbar-thumb {
+      border-radius:3px;
       background: #888; 
     }
 
     /* Handle on hover */
     *::-webkit-scrollbar-thumb:hover {
       background: #555; 
+    }
+    .highlight{
+      box-shadow: 0px 0px 6px #ff3e00 ;
     }
   </style>
   <!-- typography -->

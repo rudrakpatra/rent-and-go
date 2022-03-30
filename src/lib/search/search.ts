@@ -1,9 +1,14 @@
-export const search = (query) => {
+export const search = (query: string) => {
   const els = Array.from(
     document.querySelectorAll("[data-searchBy]")
   ) as Array<HTMLElement>;
   const matches = els.filter((el) => {
-    return el.getAttribute("data-searchBy").search(query) != -1;
+    return (
+      el
+        .getAttribute("data-searchBy")
+        .toLowerCase()
+        .search(query.toLowerCase()) != -1
+    );
   });
   return matches;
 };
@@ -14,6 +19,17 @@ export const showSearch = (matches: Array<HTMLElement>, query: string) => {
     block: "center",
     inline: "center",
   });
+  var scrollTimeout;
+  window.addEventListener("scroll", function (e) {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function () {
+      console.log("Scroll ended");
+    }, 100);
+  });
+  element.classList.add("highlight");
+  setTimeout(() => {
+    element.classList.remove("highlight");
+  }, 5000);
 };
 export const getNames = (matches: Array<HTMLElement>) => {
   return matches.map((match) => match.getAttribute("data-searchBy"));

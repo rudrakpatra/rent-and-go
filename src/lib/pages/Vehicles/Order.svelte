@@ -1,4 +1,5 @@
 <script lang="ts">
+	
     import Button from '@smui/button';
     import Dialog, { Title, Content, Actions } from '@smui/dialog';
     import Paper from "@smui/paper"
@@ -6,31 +7,60 @@
 
     import { Label } from '@smui/common';
     import SegmentedButton, { Segment } from '@smui/segmented-button';
-
-    import type Vehicle from './Vehicle';
     import { Datefield } from 'svelte-mui';
-    import TimePicker from "../../TimePicker.svelte"
-    export let vehicle:Vehicle;
+    import TimePicker from "../../TimePicker.svelte";
+
+
+    import type Vehicle from '../../models/Vehicle';
+    import { nightStayCharge } from '../../models/Vehicle';
+    import { Order } from '../../models/Order';
+
+    import { c1,sumo1 } from './../../models/mockData';
+    import type { Customer } from 'src/lib/models/Actors';
+
+    export let customer=c1;
+    export let vehicle=sumo1;
     let onSubmit=()=>{
-        console.log(vehicle);
-        // alert("submitting:\n"+JSON.parse(user.name))
+        console.log(order.vehicle);
     }
     let advancePayment=()=>{
-        return 100;
+        return order.vehicle.model.advancedPayment;
     }
     export let open=false;
-    let choices = ['AC', 'Non AC']
-    let selected = 'AC';
+    //MOCK DATA
+
+
+    export let order=new Order(customer,vehicle);
+
+    export let readonly:boolean=false;
+
+    
+    let choices = order.vehicle.hasAC?['AC', 'Non AC']:['Non AC'];
+    let selected = order.vehicle.hasAC?'AC':'Non AC';
+    if (readonly){
+        choices=[selected]
+    }
     let multiplier=1.5;
     $:multiplier=selected=="AC"?1.5:1;
 
-    let pickUpDate=new Date();
-    let returnDate=new Date();
-    const handlePickUpDate=()=>{
+    let pickUpDate=order.estimatedRentEndTime;
+    let returnDate=order.estimatedRentEndTime;
 
+    const handlePickUpDate=(DE:Date)=>{
+        //@ts-ignore
+        order.rentStartTime=DE.detail
+        console.log(order.rentStartTime)
     }
-    const handleReturnDate=()=>{
-
+    const handlePickUpTime=(hh)=>{
+        order.rentStartTime.setHours(hh);
+        console.log(order.rentStartTime)
+    }
+    const handleReturnDate=(DE:Date)=>{
+        //@ts-ignore
+        order.estimatedRentEndTime=DE.detail
+    }
+    const handleReturnTime=(_unused,mm)=>{
+        order.rentStartTime.setMinutes(mm)
     }
   </script>
   <Dialog
@@ -48,7 +78,8 @@
                     <div class="mdc-typography--overline">
                         Type:
                         <br/>
-                        <SegmentedButton segments={choices} let:segment singleSelect bind:selected={selected}>
+                        <SegmentedButton 
+                        segments={choices} let:segment singleSelect bind:selected={selected}>
                             <!-- Note: the `segment` property is required! -->
                             <Segment {segment}>
                             <Label>{segment}</Label>
@@ -58,7 +89,7 @@
                             <div style="width:fit-content">
                                 <Datefield
                                 value={pickUpDate}
-                                readonly={false}
+                                {readonly}
                                 locale={false}
                                 format='D.MM.YYYY'
                                 message='DD.MM.YYYY'
@@ -66,31 +97,37 @@
                             />
                             </div>
                 
-                            <TimePicker/>
+                            <TimePicker 
+                            {readonly}
+                            onchange={handlePickUpTime}/>
                             <br/>
         
                             <p >expected return date:</p>
                             <div style="width:fit-content">
                             <Datefield
                                 value={returnDate}
-                                readonly={false}
+                                {readonly}
                                 locale={false}
                                 format='D.MM.YYYY'
                                 message='DD.MM.YYYY'
                                 on:date-change={handleReturnDate}
                             />
                             </div>
-                            <TimePicker/>
+                            <TimePicker 
+                            {readonly}
+                            onchange={handleReturnTime}/>
                             <br/>
 
                         <p>model:</p>
-                        <p >{vehicle.model}</p>
+                        <p>{order.vehicle.model.name}</p>
                         <p>per hour charge:</p>
-                        <p>₹ {vehicle.perHourCharge*multiplier}</p>
+                        <p>₹ {order.vehicle.model.perHourCharge*multiplier}</p>
                         <p>per km charge:</p>
-                        <p>₹ {vehicle.perKmCharge*multiplier}</p>
+                        <p>₹ {order.vehicle.model.perKmCharge*multiplier}</p>
                         <p>minimum charge:</p>
-                        <p>₹ {vehicle.perHourCharge*4*multiplier}</p>
+                        <p>₹ {order.vehicle.model.perHourCharge*4*multiplier}</p>
+                        <p>night stay charge:</p>
+                        <p>₹ {nightStayCharge}</p>
                     </div>
                 </Content>
                 <Actions>

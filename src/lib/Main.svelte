@@ -3,11 +3,12 @@ import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
 import IconButton from '@smui/icon-button';
 import Search from './search/Search.svelte';
 import Drawer from './Drawer.svelte';
+import { Customer } from './models/Actors';
 
 
 let openDrawer=false;
 let activePage=1
-$:console.log(activePage);
+export let customer=new Customer();
 </script>
 
 
@@ -37,6 +38,7 @@ $:console.log(activePage);
     <Drawer 
     bind:open={openDrawer}
     active={activePage}
+    customer={customer}
     />
 </div>
 

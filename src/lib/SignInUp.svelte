@@ -1,6 +1,6 @@
 <script lang="ts">
     import Button from '@smui/button';
-	import Dialog  from '@smui/dialog';
+	import Dialog, { Actions }  from '@smui/dialog';
     import Paper, { Title, Content } from '@smui/paper';
     import FormField from '@smui/form-field';
     import Textfield from '@smui/textfield';
@@ -8,18 +8,26 @@
 
     import Tab, { Label } from '@smui/tab';
     import TabBar from '@smui/tab-bar';
+    import {User,Customer} from './models/Actors';
 
-    import type User from './User';
     export let open=true;
 
-    export let user:User;
+    export let user=new User();
+    export let customer:Customer;
     let confirm="";
     let active = 'Sign In';
     let onSubmit=()=>{
-        console.log(user);
-        // alert("submitting:\n"+JSON.parse(user.name))
+        console.log(user)
+        customer=user.validate()
+        if(!customer){
+            validateErrorMsg="sorry could not "+active.toLowerCase()+"\n pls try again"
+            openValidateDialog=true
+        }
     }
+    let validateErrorMsg=""
+    let openValidateDialog=false
   </script>
+  
   <Dialog
   scrimClickAction=""
   escapeKeyAction=""
@@ -34,16 +42,24 @@
           <Label>{tab}</Label>
         </Tab>
     </TabBar>
+    <Dialog open={openValidateDialog}>
+        <div style="margin:20px">
+            {validateErrorMsg}
+        </div>
+        <Button on:click={()=>{openValidateDialog=false}}>
+            close
+        </Button>
+    </Dialog>
     {#if active=="Sign In"}
     <FormField style="
     display:block;
     ">
         <Content>
-            <Textfield bind:value={user.name} label="Username">
-                <HelperText slot="helper" class="error">Invalid Username</HelperText>
+            <Textfield bind:value={user.username} label="Username">
+                <HelperText slot="helper">Invalid Username</HelperText>
             </Textfield>
             <Textfield bind:value={user.password} type="password" label="Password">
-                <HelperText slot="helper" class="error">Invalid Password</HelperText>
+                <HelperText slot="helper">Invalid Password</HelperText>
             </Textfield>
         </Content>
         <Button on:click={onSubmit}>{active}</Button>
@@ -54,13 +70,9 @@
     "
     onsubmit={()=>{alert("user logging");}}
     >
-   
         <Content>
-            <Textfield bind:value={user.name} label="Username">
-                <HelperText slot="helper">This name must be unique <br/>and is used in your profile</HelperText>
-            </Textfield>
-            <Textfield bind:value={user.email} type="email" label="Email id">
-                <HelperText slot="helper" class="error">Invalid Email</HelperText>
+            <Textfield bind:value={user.username} label="Username">
+                <HelperText slot="helper">This name must be unique </HelperText>
             </Textfield>
             <Textfield bind:value={user.password} type="password" label="Password">
                 <HelperText slot="helper">Use 8-16 characters </HelperText>

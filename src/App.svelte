@@ -1,9 +1,13 @@
 <script lang="ts">
   import Main from './lib/Main.svelte';
   import SignInUp from './lib/SignInUp.svelte';
+  import type  {User,Customer} from './lib/models/Actors';
+  // axios.defaults.baseURL = 'http://127.0.0.1:8000/';
+  // axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
+  // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
-  import User from "./lib/User";
-  let user=new User();
+  let user:User;
+  let customer:Customer;
 </script>
 
 <svelte:head>
@@ -133,10 +137,10 @@
   </style>
 </svelte:head>
 <main>
-  {#if !user.id}
-  <SignInUp bind:user/>
+  {#if !customer}
+  <SignInUp bind:user bind:customer/>
   {:else}
-  <Main/>
+  <Main customer={customer}/>
   {/if}
 </main>
 

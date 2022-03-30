@@ -1,17 +1,18 @@
 <script lang="ts">
+	import { Customer } from './models/Actors';
     import Drawer, {
       Content,
       Header,
       Title,
-      Subtitle,
       Scrim,
     } from '@smui/drawer';
-    import List, { Item, Text, Graphic, Separator, Subheader } from '@smui/list';
-    import { H6 } from '@smui/common/elements';
+    import List, { Item, Text, Graphic, Separator } from '@smui/list';
     import VehicleList from './pages/Vehicles/VehicleList.svelte';
     import Orders from './pages/Orders.svelte';
     import Help from './pages/Help.svelte';
     export let open = false;
+
+
     interface Page{
       name:string;
       icon:string;
@@ -39,18 +40,19 @@
       active = i;
       open = false;
     }
+
+    export let customer=new Customer();
   </script>
   
 <Drawer variant="modal" bind:open>
     <Header>
-    <Title>User:{"<user name>"}</Title>
-    <Subtitle>Subtitle.</Subtitle>
+    <Title>{customer.accountName}</Title>
+    <Title>balance:₹ {customer.balance}</Title>
     </Header>
     <Content>
       <List>
           {#each pages as page ,i}
             <Item
-            href="javascript:void(0)"
             on:click={() => setActive(i)}
             activated={active === i}
             >
